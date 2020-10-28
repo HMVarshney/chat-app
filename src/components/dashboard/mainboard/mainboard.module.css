@@ -1,0 +1,35 @@
+.chatBoxContainer{
+    height: 77vh;
+    overflow: scroll;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.chatCardContainer{
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    margin: 1em 0;
+    max-width: 40vw;
+    word-wrap: break-word;
+}
+
+.chatInput{
+    box-shadow: 1pxx 1px 3px gray;
+    border-radius: 15px;
+    width: 100%;
+}
+
+.chatInput::placeholder{
+    color: black;
+}
+
+.isCurrentUser{
+    justify-content: flex-end;
+}

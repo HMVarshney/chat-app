@@ -1,0 +1,18 @@
+.container{
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    padding: 1em;
+    width: 100%;
+    box-shadow: 0 2px 3px gray;
+    margin-bottom: 1em;
+    z-index: 1000;
+    background-color: white;
+}
+
+.container > div{
+    width: 80vw;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
