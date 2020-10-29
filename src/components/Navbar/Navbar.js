@@ -10,6 +10,11 @@ const Navbar = () => {
 
     const { logout, authStatus: { isAuthenticated } } = useContext(AuthContext);
 
+    const logoutFunction = () => {
+        logout();
+        window.location.reload();
+    }
+
     return (  
         <div className={styles.container}>
             <div>
@@ -19,11 +24,20 @@ const Navbar = () => {
                 <div style={{flexGrow: 1}} />
                 <div>
                     {isAuthenticated ? 
-                        <Button size='small' negative onClick={()=>logout()}>Sign Out</Button>
+                        <Button size='small' negative onClick={()=>logoutFunction()}>Sign Out</Button>
                     :
-                        <Link to='/'>
-                            <Button secondary>Login</Button>
-                        </Link>
+                        <div className='d-flex align-items-center'>
+                            <div className='mr-1 ml-1'>
+                                <Link to='/'>
+                                    <Button secondary>Login</Button>
+                                </Link>
+                            </div>
+                            <div className='mr-1 ml-1'>
+                                <Link to='/register'>
+                                    <Button positive>Register</Button>
+                                </Link>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>

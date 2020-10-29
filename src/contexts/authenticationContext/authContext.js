@@ -1,4 +1,6 @@
+import Axios from 'axios';
 import React from 'react';
+import * as URL from '../../constants';
 import { createContext, useState } from "react";
 import { getFromLocalStorage, deleteFromLocalStorage, loginUser, saveInLocalStorage, readCookie, setCookie, deleteCookie } from "./authActions";
 
@@ -44,11 +46,27 @@ const AuthContextProvider = ({ children }) => {
 
     const logout = () => {
         deleteFromLocalStorage('user-details');
-        deleteCookie('auth-jwt')
+        deleteCookie('auth-jwt');
+
+        setAuthStatus({...authStatus, isAuthenticated: false, user_details: null, jwt: null});
     };
 
+    const updateUserDetails = async () => {
+        try{
+            const response = await Axios.get(`${URL.BACKEND_URL}/users/${authStatus.userDetails.id}`);
+
+            if(response.status===200){
+                setAuthStatus({...authStatus, userDetails: response.data});
+                saveInLocalStorage('user-details', response.data);
+            }
+        } catch(error){
+            console.log(error.response);
+            window.location.reload();
+        }
+    }
+
     return (  
-        <AuthContext.Provider value={{authStatus, login, logout}}>
+        <AuthContext.Provider value={{authStatus, login, logout, updateUserDetails}}>
             { children }
         </AuthContext.Provider>
     );

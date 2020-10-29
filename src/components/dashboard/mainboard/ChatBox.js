@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './mainboard.module.css';
 import Avatar from '@bit/mui-org.material-ui.avatar';
 import Typography from '@bit/mui-org.material-ui.typography';
+import { ConversationContext } from '../../../contexts/conversationContext/conversationContext';
+import { AuthContext } from '../../../contexts/authenticationContext/authContext';
 
-const ChatBox = ({ messages, user }) => {
+const ChatBox = () => {
+
+    const { messages } = useContext(ConversationContext);
+    const { authStatus: { userDetails } } = useContext(AuthContext);
+
     return (  
         <div className={styles.chatBoxContainer}>
             {messages.map((message,i)=>{
-                const isCurrentUser = message.user === user;
+                const isCurrentUser = message.user === userDetails.username;
                 return(
                     <div key={i} className={`d-flex ${isCurrentUser ? styles.isCurrentUser : ''}`}>
                         <ChatCard message={message} isCurrentUser={isCurrentUser} />
