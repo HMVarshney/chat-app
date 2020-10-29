@@ -1,10 +1,10 @@
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT + 1 || 5000;
 
 const express = require('express');
 const app = express();
 
-const server = app.listen(5000, () => {
-    console.log('Server Connected on port 5000.')
+const server = app.listen(port, () => {
+    console.log(`Server Connected on port ${port}.`);
 });
 
 const socket = require('socket.io');
