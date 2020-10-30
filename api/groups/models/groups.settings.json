@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "groups",
+  "info": {
+    "name": "Groups",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "group_name": {
+      "type": "string"
+    },
+    "group_desc": {
+      "type": "string"
+    },
+    "group_id": {
+      "type": "uid"
+    },
+    "group_admin": {
+      "via": "groups_admin",
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}
