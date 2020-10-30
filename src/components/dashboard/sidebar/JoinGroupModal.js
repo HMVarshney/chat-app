@@ -9,7 +9,7 @@ import { joinGroup } from "../api/groups/joinGroup";
 
 const JoinGroupModal = ({ handleClose }) => {
 
-    const { authStatus: { userDetails }, updateUserDetails } = useContext(AuthContext);
+    const { authStatus: { userDetails, jwt }, updateUserDetails } = useContext(AuthContext);
 
     const idRef = useRef();
 
@@ -23,7 +23,7 @@ const JoinGroupModal = ({ handleClose }) => {
         e.preventDefault();
 
         try{
-            const response = await joinGroup(idRef.current.value, userDetails);
+            const response = await joinGroup(idRef.current.value, userDetails, jwt);
 
             if(response.status===200){
                 setUploadStatus({uploading: false, uploadSuccess: true, error: null});
@@ -38,7 +38,9 @@ const JoinGroupModal = ({ handleClose }) => {
 
     return ( 
         <div> 
-            <Modal.Header closeButton>Join Group</Modal.Header>
+            <Modal.Header closeButton>
+                <Typography variant='h6'>Add Contact</Typography>
+            </Modal.Header>
             <Modal.Body>
                 <div className='p-lg-3 p-1'>
                     <Form onSubmit={(e)=>handleSubmit(e)}>
@@ -54,7 +56,7 @@ const JoinGroupModal = ({ handleClose }) => {
             </Modal.Body>
 
             {uploadStatus.uploadSuccess && 
-                <div className='mt-2 mb-2 p-4'>
+                <div className='p-2'>
                     <Alert variant='success'>
                         <Typography variant='body1'>You are now part of the group.</Typography>
                     </Alert>
@@ -62,8 +64,8 @@ const JoinGroupModal = ({ handleClose }) => {
             }
 
             {uploadStatus.error && 
-                <div className='mt-2 mb-2 p-4'>
-                    <Alert variant='error'>
+                <div className='p-2'>
+                    <Alert variant='danger'>
                         <Typography variant='body1'>There was a problem joining the group. Please try again.</Typography>
                     </Alert>
                 </div>

@@ -12,7 +12,7 @@ const NewContactModal = ({ handleClose }) => {
 
     const uniqueID = uuid();
 
-    const { authStatus: { userDetails } } = useContext(AuthContext);
+    const { authStatus: { userDetails, jwt }, updateUserDetails } = useContext(AuthContext);
 
     const descRef = useRef();
     const nameRef = useRef();
@@ -28,11 +28,12 @@ const NewContactModal = ({ handleClose }) => {
         setUploadStatus({uploading: true, uploadSuccess: false, error: null});
 
         try{
-            const response = await createGroup({name: nameRef.current.value, desc: descRef.current.value, userID: userDetails.id, groupID: uniqueID});  
+            const response = await createGroup({name: nameRef.current.value, desc: descRef.current.value, userID: userDetails.id, groupID: uniqueID}, jwt);  
 
             if(response.status===200){
                 setUploadStatus({uploading: false, uploadSuccess: true, error: null});
                 handleClose(null);
+                updateUserDetails();
             }
 
         } catch(error){
@@ -78,7 +79,7 @@ const NewContactModal = ({ handleClose }) => {
 
             {uploadStatus.error && 
                 <div className='mt-2 mb-2 p-4'>
-                    <Alert variant='error'>
+                    <Alert variant='danger'>
                         <Typography variant='body1'>There was a problem creating the group. Please try again.</Typography>
                     </Alert>
                 </div>

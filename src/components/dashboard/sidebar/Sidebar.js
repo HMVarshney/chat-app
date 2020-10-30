@@ -17,7 +17,7 @@ const RiseLoader = React.lazy(()=>import('@bit/davidhu2000.react-spinners.rise-l
 
 const Sidebar = () => {
 
-    const { authStatus: { userDetails: { id, username } } } = useContext(AuthContext);
+    const { authStatus: { userDetails: { id, username }, jwt } } = useContext(AuthContext);
     const { joinRoom } = useContext(ConversationContext);
 
     const [tabSelected, toggleTabs] = useState(0);
@@ -31,7 +31,7 @@ const Sidebar = () => {
     useEffect(()=>{
         (async()=>{
             try{
-                const response = await fetchGroups(id);
+                const response = await fetchGroups(id, jwt);
                 
                 if(response.status === 200){
                     setGroups({loading: false, groups: response.data, error: null});
@@ -62,8 +62,8 @@ const Sidebar = () => {
         if(groups.loading){
             return(
                 <Suspense fallback={<div>loading</div>}>
-                    <div style={{height:'100%', width:'100%'}} className='d-flex align-items-center justify-content'>
-                        <RiseLoader color='purple' size='30' />
+                    <div style={{height:'80vh', width:'100%'}} className='d-flex align-items-center justify-content-center'>
+                        <RiseLoader color='purple' size='20' />
                     </div>
                 </Suspense>
             )

@@ -5,7 +5,7 @@ import Typography from '@bit/mui-org.material-ui.typography';
 import { AuthContext } from '../../contexts/authenticationContext/authContext';
 
 const Login = ({ history }) => {
-    const { login, authStatus: { isAuthenticated } } = useContext(AuthContext);
+    const { login, authStatus: { isAuthenticated, isVerifying } } = useContext(AuthContext);
     const passwordRef = useRef();
 
     const [loginDetails, setDetails] = useState({
@@ -48,7 +48,7 @@ const Login = ({ history }) => {
                         <Form.Check className='mt-2 mb-1' onChange={()=>showPassword()} type='checkbox' label='Show Password' />
                     </Form.Group>
                     <Form.Group style={{width:'100%'}}>
-                        <Button style={{width:'100%'}} type='submit' className='mr-2' basic color='purple'>Join</Button>
+                        <Button loading={isVerifying} style={{width:'100%'}} type='submit' className='mr-2' basic color='purple'>Join</Button>
                     </Form.Group>
                 </Form>
             </div>

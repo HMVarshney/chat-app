@@ -1,7 +1,7 @@
 import Axios from "axios";
 import * as URL from '../../../../constants';
 
-async function joinGroup(groupID, userDetails){
+async function joinGroup(groupID, userDetails, jwt){
 
     const groups = userDetails.groups;
     groups.push(groupID);
@@ -10,6 +10,10 @@ async function joinGroup(groupID, userDetails){
     try{
         const response = await Axios.put(`${URL.BACKEND_URL}/users/${userDetails.id}`, {
             groups
+        },{
+            headers:{
+                "Authorization": `Bearer ${jwt}`
+            }
         });
 
         return response;

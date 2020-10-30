@@ -2,7 +2,7 @@ import * as URL from '../../../../constants';
 import qs from 'qs';
 const { default: Axios } = require("axios");
 
-async function fetchGroups(userID){
+async function fetchGroups(userID, jwt){
 
     const query = qs.stringify({
         _where: {
@@ -13,7 +13,12 @@ async function fetchGroups(userID){
         }
     })
     try{
-        const response = await Axios.get(`${URL.BACKEND_URL}/groups?${query}`);
+        const response = await Axios.get(`${URL.BACKEND_URL}/groups?${query}`, {
+            headers:{
+                "Authorization": `Bearer ${jwt}`
+            }
+        });
+
         console.log(response);
         return response;
     } catch(error){

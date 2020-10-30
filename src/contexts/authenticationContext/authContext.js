@@ -5,7 +5,6 @@ import { createContext, useState } from "react";
 import { getFromLocalStorage, deleteFromLocalStorage, loginUser, saveInLocalStorage, readCookie, setCookie, deleteCookie } from "./authActions";
 
 export const AuthContext = createContext();
-let socket;
 
 const user_details = getFromLocalStorage('user-details')
 
@@ -24,23 +23,24 @@ const AuthContextProvider = ({ children }) => {
     });
 
     const login = async (email, password) => {
+        setAuthStatus({...authStatus, isVerifying: true});
         try{
             const loginResponse = await loginUser(email, password); 
             
             if(loginResponse.status === 200){
-                setAuthStatus({ isAuthenticated: true, userDetails: loginResponse.data.user, authenticationError: null, jwt: loginResponse.data.jwt });
+                setAuthStatus({ isAuthenticated: true, userDetails: loginResponse.data.user, authenticationError: null, jwt: loginResponse.data.jwt, isVerifying: false});
                 saveInLocalStorage('user-details', loginResponse.data.user);
                 setCookie('auth-jwt', loginResponse.data.jwt);
 
                 return loginResponse;
             }
 
-            setAuthStatus({isAuthenticated: false, userDetails: {}, authenticationError: 'Unidentified error', jwt: ''});
+            setAuthStatus({isAuthenticated: false, userDetails: {}, authenticationError: 'Unidentified error', jwt: '', isVerifying: false});
             return loginResponse;
 
         } catch(error){
             console.log(error.response);
-            return error.response;
+            throw error.response;
         }
     };
 
