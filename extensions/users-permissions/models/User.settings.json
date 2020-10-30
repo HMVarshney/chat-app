@@ -59,12 +59,13 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "groups": {
+    "groups_admin": {
+      "via": "group_admin",
       "collection": "groups"
     },
-    "groups_admin": {
-      "collection": "groups",
-      "via": "group_admin"
+    "groups": {
+      "via": "group_members",
+      "collection": "groups"
     }
   }
 }

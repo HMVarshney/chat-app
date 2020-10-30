@@ -21,9 +21,15 @@
       "type": "uid"
     },
     "group_admin": {
-      "via": "groups_admin",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "groups_admin"
+    },
+    "group_members": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "groups",
+      "dominant": true
     }
   }
 }
